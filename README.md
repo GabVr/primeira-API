@@ -132,7 +132,7 @@ A API pode ser testada utilizando:
 
 ---
 
- 👨‍💻 Autor
+ 👨‍💻 Autor - Gabriel Veríssimo Andrade da Silva
 
 Projeto desenvolvido para fins acadêmicos.
 
