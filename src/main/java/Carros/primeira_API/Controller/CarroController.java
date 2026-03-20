@@ -1,7 +1,14 @@
 package Carros.primeira_API.Controller;
 
+import Carros.primeira_API.Excecoes.CampoPreenchimento;
 import Carros.primeira_API.Model.Carro;
+
+import Carros.primeira_API.Service.ValidarCarro;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.*;
 
@@ -11,14 +18,24 @@ public class CarroController {
 
    private List<Carro> listaCarros = new ArrayList<>();
 
-    @PostMapping
-    public Carro criarCarro(@RequestBody Carro carro) {
-         this.listaCarros.add(carro);
-         return carro;
+
+   @PostMapping
+    public ResponseEntity<Carro> criarCarro(@RequestBody Carro carro) {
+
+            ValidarCarro.validarCarroCompleto(carro);
+            listaCarros.add(carro);
+            return ResponseEntity.status(HttpStatus.CREATED).body(carro);
+
     }
 
     @GetMapping
     public  List<Carro> pegarListaCarros() {
+
+        if(this.listaCarros.isEmpty() || this.listaCarros == null) {
+
+            throw new CampoPreenchimento("Nenhum carro encontrado! ou a sua lista está vazia.");
+        }
+
         return this.listaCarros;
     }
 

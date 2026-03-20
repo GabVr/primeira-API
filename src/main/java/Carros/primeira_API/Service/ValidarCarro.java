@@ -1,6 +1,7 @@
-package Carros.primeira_API.Validacoes;
+package Carros.primeira_API.Service;
 
 import Carros.primeira_API.Excecoes.CampoPreenchimento;
+import Carros.primeira_API.Model.Carro;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -96,9 +97,20 @@ public class ValidarCarro {
         }
         placa= placa.trim();
 
-        if(!placa.matches("[A-Z]{3}[0-9]{1}[A-Z]{1}[0-9]{2}|[A-Z]{3}[0-9]{4}")){
+        if(!placa.matches("[A-Z]{3}[0-9][A-Z][0-9]{2}|[A-Z]{3}[0-9]{4}")){
             throw new CampoPreenchimento("A placa do seu carro não segue os Padrões do MercoSul");
         }
+
     }
+
+    public static void validarCarroCompleto(Carro carro){
+
+       validarMarca(carro.getMarca());
+       validarModelo(carro.getMarca(),carro.getModelo());
+       validarCor(carro.getCor());
+       validarAno(carro.getAno());
+       validarPlaca(carro.getPlaca());
+
+  }
 
 }

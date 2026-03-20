@@ -1,10 +1,8 @@
 package Carros.primeira_API.Model;
 
-
-import Carros.primeira_API.Excecoes.CampoPreenchimento;
 import org.springframework.stereotype.Service;
 
-import Carros.primeira_API.Validacoes.*;
+import Carros.primeira_API.Service.*;
 
 
 @Service
@@ -21,7 +19,7 @@ public class Carro {
     }
 
     public void setMarca(String marca) {
-        ValidarCarro.validarMarca(marca);
+
         this.marca = marca.trim();
     }
 
@@ -31,11 +29,7 @@ public class Carro {
 
 
     public void setModelo(String modelo) {
-       if(this.marca == null){
-            throw new CampoPreenchimento("Defina a marca antes do modelo do carro!");
-        }
 
-        ValidarCarro.validarModelo(this.marca, modelo);
         this.modelo = modelo.trim();
     }
 
@@ -44,7 +38,7 @@ public class Carro {
     }
 
     public void setCor(String cor) {
-        ValidarCarro.validarCor(cor);
+
         this.cor = cor.trim();
     }
 
@@ -53,7 +47,7 @@ public class Carro {
     }
 
     public void setAno(int ano) {
-        ValidarCarro.validarAno(ano);
+
         this.ano = ano;
     }
 
@@ -62,8 +56,9 @@ public class Carro {
     }
 
     public void setPlaca(String placa) {
-        ValidarCarro.validarPlaca(placa);
+
         this.placa = placa.trim();
     }
+
 
 }
