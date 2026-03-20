@@ -19,12 +19,23 @@ public class CarroController {
    private List<Carro> listaCarros = new ArrayList<>();
 
 
+
    @PostMapping
     public ResponseEntity<Carro> criarCarro(@RequestBody Carro carro) {
 
-            ValidarCarro.validarCarroCompleto(carro);
-            listaCarros.add(carro);
-            return ResponseEntity.status(HttpStatus.CREATED).body(carro);
+       ValidarCarro.validarCarroCompleto(carro);
+
+       for (Carro c : listaCarros) {
+
+           if (c.getPlaca().equals(carro.getPlaca())) {
+               throw new CampoPreenchimento("Erro: Não pode existir 2 ou mais carros com uma mesma placa.");
+           }
+
+       }
+
+       this.listaCarros.add(carro);
+       return ResponseEntity.status(HttpStatus.CREATED).body(carro);
+
 
     }
 
@@ -88,13 +99,14 @@ public class CarroController {
     }
 
     @DeleteMapping("/modelo/{modelo}")
-    public String removerCarro(@PathVariable String modelo) {
+    public ResponseEntity<String> removerCarro(@PathVariable String modelo) {
 
         boolean remover = listaCarros.removeIf(carro -> carro.getModelo().equalsIgnoreCase(modelo));
 
         if (remover){
-            return "Carro removido com sucesso!";
+            return ResponseEntity.status(HttpStatus.OK).body("Carro removido com sucesso!");
         }
-        throw new RuntimeException("Carro não encontrado");
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Carro não foi encontrado para ser removido!");
     }
 }
